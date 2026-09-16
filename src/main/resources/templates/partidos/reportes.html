@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reportes - Partidos Politicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Consultas y Reportes Parametrizados: Partidos</h2>
+        <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">Reporte 1: Filtrar Partidos por Pais</div>
+        <div class="card-body">
+            <form th:action="@{/partidos/reportes}" method="get" class="row g-3">
+                <div class="col-auto">
+                    <input type="text" name="pais" class="form-control" placeholder="Ingrese pais" th:value="${paramPais}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+
+            <table th:if="${partidosPorPais != null}" class="table table-bordered mt-3">
+                <thead><tr><th>Nombre</th><th>Pais</th><th>Presidente</th></tr></thead>
+                <tbody>
+                <tr th:each="p : ${partidosPorPais}">
+                    <td th:text="${p.nombre}"></td>
+                    <td th:text="${p.pais}"></td>
+                    <td th:text="${p.presidente}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">Reporte 2: Partidos con Congresistas Mayor o Igual a</div>
+        <div class="card-body">
+            <form th:action="@{/partidos/reportes}" method="get" class="row g-3">
+                <div class="col-auto">
+                    <input type="number" name="minCongresistas" class="form-control" placeholder="Minimo congresistas" th:value="${paramMinCongresistas}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </div>
+            </form>
+
+            <table th:if="${partidosPorCongresistas != null}" class="table table-bordered mt-3">
+                <thead><tr><th>Nombre</th><th>Pais</th><th>Num Congresistas</th></tr></thead>
+                <tbody>
+                <tr th:each="p : ${partidosPorCongresistas}">
+                    <td th:text="${p.nombre}"></td>
+                    <td th:text="${p.pais}"></td>
+                    <td th:text="${p.numCongresistas}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>tml>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reportes - Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Consultas y Reportes Parametrizados: Usuarios</h2>
+        <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">Reporte 1: Filtrar Usuarios por Rol</div>
+        <div class="card-body">
+            <form th:action="@{/usuarios/reportes}" method="get" class="row g-3">
+                <div class="col-auto">
+                    <select name="rol" class="form-select">
+                        <option value="">Seleccione Rol</option>
+                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        <option value="ROLE_USER">ROLE_USER</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+
+            <table th:if="${usuariosPorRol != null}" class="table table-bordered mt-3">
+                <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th></tr></thead>
+                <tbody>
+                <tr th:each="u : ${usuariosPorRol}">
+                    <td th:text="${u.nombre}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.rol}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">Reporte 2: Buscar Usuarios por Nombre</div>
+        <div class="card-body">
+            <form th:action="@{/usuarios/reportes}" method="get" class="row g-3">
+                <div class="col-auto">
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre usuario" th:value="${paramNombre}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary">Buscar</button>
+                </div>
+            </form>
+
+            <table th:if="${usuariosPorNombre != null}" class="table table-bordered mt-3">
+                <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th></tr></thead>
+                <tbody>
+                <tr th:each="u : ${usuariosPorNombre}">
+                    <td th:text="${u.nombre}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.rol}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
